@@ -1,0 +1,30 @@
+<input type="text" value="{{ messages|length }}" id="messages-count" class="d-none" hidden>
+{% for message in messages %}
+    {% if message.sender_id == current_user.user_id %}
+        <div class="d-flex justify-content-end align-items-center mb-md-2 mb-5">
+            <small class="pe-2">
+                {{ message.sent_dt|pretty_date }}
+            </small>
+            <span class="custom-bg1 text-white pe-3 ps-5 py-2 rounded-sm">
+                {% if message.is_image %}
+                    <img src="/static/images/{{ message.sender_copy|get_plain_text }}">
+                {% else %}
+                    {{ message.sender_copy|get_plain_text }}
+                {% endif %}
+            </span>
+        </div>
+    {% else %}
+        <div class="d-flex justify-content-start align-items-center mb-md-2 mb-5">
+            <span class="custom-bg2 ps-3 pe-5 py-2 rounded-sm">
+                {% if message.is_image %}
+                    <img src="/static/images/{{ message.receiver_copy|get_plain_text }}">
+                {% else %}
+                    {{ message.receiver_copy|get_plain_text }}
+                {% endif %}
+            </span>
+            <smal class="ps-2">
+                {{ message.sent_dt|pretty_date }}
+            </small>
+        </div>
+    {% endif %}
+{% endfor %}

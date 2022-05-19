@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+    {% if new_users %}
+        <h1 class="custom-bg2 custom-color5 text-center fw-bold py-3 fs-5">START A NEW CONVERSATION</h1>
+        {% for user in new_users %}
+            <div class="card mb-2">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <span>
+                        <i class="bi bi-person-circle"></i>&nbsp;{{ user.username }}
+                    </span>
+                    <form action="{{ url_for('start_conversation') }}" method="post">
+                        <input type="text" name="user_id" value="{{ user.user_id }}" hidden>
+                        <input type="submit" value="Say Hi!" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="alert alert-danger">No new users were found</p>
+    {% endif %}
+
+{% endblock content %}
